@@ -1,0 +1,26 @@
+{
+    "name": "pop-academy-desktop",
+    "version": "1.0.0",
+    "description": "Pop Academy - Right Brain Development Desktop App",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "dev": "electron . --dev",
+        "build:css": "tailwindcss -i ./styles/input.css -o ./styles/output.css",
+        "watch:css": "tailwindcss -i ./styles/input.css -o ./styles/output.css --watch"
+    },
+    "keywords": [
+        "electron",
+        "education",
+        "right-brain"
+    ],
+    "author": "Pop Academy",
+    "license": "MIT",
+    "devDependencies": {
+        "autoprefixer": "^10.4.22",
+        "daisyui": "^5.5.5",
+        "electron": "^28.0.0",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^3.4.18"
+    }
+}

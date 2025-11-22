@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Academy Launcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #DFFB60 0%, #4ECDC4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .launcher-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #2D3748;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+
+        .launch-btn {
+            background: linear-gradient(135deg, #FF6B9D 0%, #C3447A 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        .launch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .launch-btn:active {
+            transform: translateY(0);
+        }
+
+        .features {
+            margin-top: 40px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .feature {
+            margin: 12px 0;
+            font-size: 16px;
+            color: #4A5568;
+        }
+
+        .feature::before {
+            content: "✓";
+            color: #48BB78;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .note {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid #FFD93D;
+        }
+
+        .note strong {
+            color: #F59E0B;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="launcher-card">
+        <div class="logo">🦁</div>
+        <h1>Pop Academy</h1>
+        <p class="subtitle">Right Brain Development Platform</p>
+
+        <button class="launch-btn" onclick="launchApp()">
+            🚀 Launch App
+        </button>
+
+        <div class="features">
+            <div class="feature">6 Template Courses</div>
+            <div class="feature">12 Educational Videos</div>
+            <div class="feature">3 PDF Workbooks</div>
+            <div class="feature">60 Lesson Plans</div>
+            <div class="feature">27+ Brain Training Games</div>
+            <div class="feature">Student Progress Tracking</div>
+            <div class="feature">Admin Content Management</div>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> All template content is pre-loaded and ready to use!<br>
+            Login as <strong>Student</strong> or <strong>Admin</strong> (password: 2004)
+        </div>
+    </div>
+
+    <script>
+        function launchApp() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>
