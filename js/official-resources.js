@@ -163,38 +163,45 @@ const OfficialResources = {
         }
     },
 
-    updateVideos: function () {
+    updateVideos: function (force) {
         try {
             const currentVideos = JSON.parse(localStorage.getItem('videos') || '[]');
-            if (currentVideos.length === 0 || confirm('Replace existing videos with official educational videos?')) {
+            if (currentVideos.length === 0 || force === true || confirm('Replace existing videos with official educational videos?')) {
                 localStorage.setItem('videos', JSON.stringify(this.videos.map(v => ({
                     ...v,
                     createdAt: new Date().toISOString()
                 }))));
-                console.log('✅ 36 official educational videos added');
+                console.log('✅ Official educational videos added');
             }
         } catch (error) {
             console.error('Error updating videos:', error);
         }
     },
 
-    // Initialize all official resources
+    // Initialize all official resources (confirm still required for videos)
     initializeAll: function () {
         console.log('🚀 Initializing official Right-Brain Education resources...');
         this.updateCourses();
         this.updateVideos();
         console.log('✅ All official resources initialized!');
-        console.log('📚 Total courses: 6');
-        console.log('🎥 Total videos: 36');
-        console.log('🔗 Total resource links: 20+');
-        alert('✅ Official resources loaded!\n\n📚 6 courses\n🎥 36 videos\n🔗 20+ resource links\n\nPlease refresh the page to see all updates.');
+        console.log('📚 Total courses: ' + this.courses.length);
+        console.log('🎥 Total videos: ' + this.videos.length);
+        alert('✅ Official resources loaded!\n\n📚 ' + this.courses.length + ' courses\n🎥 ' + this.videos.length + ' videos\n\nPlease refresh the page to see all updates.');
+    },
+
+    // Seed all official resources without prompts (developer helper)
+    seedAll: function () {
+        console.log('🔧 Seeding official resources (no prompts)...');
+        this.updateCourses();
+        this.updateVideos(true);
+        console.log('✅ Seed complete. Refresh the page to view changes.');
     }
 };
 
 // Auto-run on page load if needed
 if (typeof window !== 'undefined') {
     window.OfficialResources = OfficialResources;
-    console.log('📚 Official Resources module loaded. Run OfficialResources.initializeAll() to add all resources.');
+    console.log('📚 Official Resources module loaded. Run OfficialResources.initializeAll() or OfficialResources.seedAll() to add resources.');
 }
 // Official Right-Brain Education Resources
 // This file contains all official course resources with real URLs
