@@ -7,6 +7,437 @@
     <title>Pop Academy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/output.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body class="bg-base-200 h-screen overflow-hidden flex flex-col">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen flex items-center justify-center h-full w-full bg-gradient-to-br from-primary to-secondary fixed z-50">
+        <div class="card w-96 bg-base-100 shadow-xl">
+            <div class="card-body items-center text-center">
+                <div class="text-6xl mb-4 animate-bounce">🦁</div>
+                <h1 class="card-title text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Pop Academy</h1>
+                <p class="text-base-content/70 mb-6">Right Brain Development</p>
+
+                <div class="tabs tabs-boxed mb-6 w-full">
+                    <a class="tab tab-active flex-1 login-tab active" data-tab="student">Student</a>
+                    <a class="tab flex-1 login-tab" data-tab="admin">Admin</a>
+                </div>
+
+                <!-- Student Login -->
+                <div class="login-tab-content active w-full" id="student-login">
+                    <form id="student-login-form" class="form-control w-full gap-4">
+                        <div>
+                            <input type="text" id="student-name" placeholder="Your Name" class="input input-bordered w-full" required>
+                        </div>
+                        <div>
+                            <input type="text" id="student-id" placeholder="Student ID (optional)" class="input input-bordered w-full" autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Start Learning</button>
+                        <p class="text-xs text-base-content/50 mt-2">New students will be registered automatically</p>
+                    </form>
+                </div>
+
+                <!-- Admin Login -->
+                <div class="login-tab-content hidden w-full" id="admin-login">
+                    <form id="admin-login-form" class="form-control w-full gap-4">
+                        <div>
+                            <input type="password" id="admin-password" placeholder="Enter Admin Password" class="input input-bordered w-full" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Login as Admin</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="app-container" style="display: none;">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🦁</div>
+                <h2>Pop Academy</h2>
+            </div>
+            <div class="user-mode" id="user-mode">
+                <span class="mode-badge">Admin Mode</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="courses">
+                    <span class="nav-icon">📚</span>
+                    <span>Courses</span>
+                </li>
+                <li class="nav-item" data-page="profile">
+                    <span class="nav-icon">👤</span>
+                    <span>Profile</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logout-btn">
+                    <span class="nav-icon">🚪</span>
+                    <span>Switch User</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Courses Page -->
+            <div class="page active" id="courses-page">
+                <header class="page-header">
+                    <h1>Courses</h1>
+                    <button class="btn-add admin-only" id="add-course-btn">
+                        <span>➕</span> Add Course
+                    </button>
+                </header>
+                <div class="courses-grid" id="courses-grid"></div>
+            </div>
+
+            <!-- Course Detail Page -->
+            <div class="page" id="course-detail-page">
+                <header class="page-header">
+                    <button class="btn-back" id="back-to-courses">← Back</button>
+                    <h1 id="course-detail-title">Course Details</h1>
+                </header>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="videos">Videos</button>
+                    <button class="tab-btn" data-tab="pdfs">PDFs</button>
+                    <button class="tab-btn" data-tab="dpp">DPP</button>
+                    <button class="tab-btn" data-tab="lesson-plans">Lesson Plans</button>
+                    <button class="tab-btn" data-tab="exercises">Games</button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="tab-content active" id="videos-tab">
+                    <div class="tab-header">
+                        <h2>Videos</h2>
+                        <button class="btn-add admin-only" id="add-video-btn">Add Video</button>
+                    </div>
+                    <div id="videos-list" class="content-list"></div>
+                </div>
+
+                <div class="tab-content" id="pdfs-tab">
+                    <div class="tab-header">
+                        <h2>PDFs</h2>
+                        <button class="btn-add admin-only" id="add-pdf-btn">Upload PDF</button>
+                    </div>
+                    <div id="pdfs-list" class="content-list"></div>
+                </div>
+
+                <div class="tab-content" id="dpp-tab">
+                    <div class="tab-header">
+                        <h2>Daily Practice Problems (DPP)</h2>
+                        <button class="btn-add admin-only" id="add-dpp-btn">Upload DPP</button>
+                    </div>
+                    <div id="dpp-list" class="content-list"></div>
+                </div>
+
+                <div class="tab-content" id="lesson-plans-tab">
+                    <div class="tab-header">
+                        <h2>Lesson Plans</h2>
+                        <button class="btn-add admin-only" id="add-lesson-plan-btn">Upload Lesson Plan</button>
+                    </div>
+                    <div id="lesson-plans-list" class="content-list"></div>
+                </div>
+
+                <div class="tab-content" id="exercises-tab">
+                    <div class="tab-header">
+                        <h2>Brain Games</h2>
+                    </div>
+                    <div id="exercises-list" class="content-list"></div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="page" id="profile-page">
+                <header class="page-header">
+                    <h1>My Profile</h1>
+                </header>
+                <div class="profile-container">
+                    <div class="profile-hero">
+                        <div class="avatar-circle-large" id="profile-avatar">👦</div>
+                        <h2 id="profile-name">Student</h2>
+                        <p class="profile-level" id="profile-level">Level 1 Explorer</p>
+                    </div>
+
+                    <!-- Analytics Dashboard -->
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-icon">📚</div>
+                            <div class="analytics-content">
+                                <div class="analytics-value" id="stat-courses-completed">0</div>
+                                <div class="analytics-label">Courses Completed</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">🎥</div>
+                            <div class="analytics-content">
+                                <div class="analytics-value" id="stat-videos-watched">0</div>
+                                <div class="analytics-label">Videos Watched</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">🎮</div>
+                            <div class="analytics-content">
+                                <div class="analytics-value" id="stat-games-played">0</div>
+                                <div class="analytics-label">Games Played</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">⭐</div>
+                            <div class="analytics-content">
+                                <div class="analytics-value" id="stat-points">0</div>
+                                <div class="analytics-label">Total Points</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">⏱️</div>
+                            <div class="analytics-content">
+                                <div class="analytics-value" id="stat-time-spent">0h</div>
+                                <div class="analytics-label">Time Spent</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-icon">🔥</div>
+                            <div class="analytics-content">
+                                <div class="analytics-value" id="stat-streak">0</div>
+                                <div class="analytics-label">Day Streak</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Chart -->
+                    <div class="progress-section">
+                        <h3>Learning Progress</h3>
+                        <div id="progress-chart" class="progress-chart"></div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="activity-section">
+                        <h3>Recent Activity</h3>
+                        <div id="recent-activity" class="activity-list"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals (single copy) -->
+    <div class="modal" id="add-course-modal">
+        <div class="modal-content">
+            <h2>Add New Course</h2>
+            <form id="add-course-form">
+                <div class="form-group">
+                    <label>Course Name</label>
+                    <input type="text" id="course-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="course-description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Color Theme</label>
+                    <div class="color-picker">
+                        <div class="color-option selected" data-color="#FF6B9D" style="background: #FF6B9D"></div>
+                        <div class="color-option" data-color="#4ECDC4" style="background: #4ECDC4"></div>
+                        <div class="color-option" data-color="#FFD93D" style="background: #FFD93D"></div>
+                        <div class="color-option" data-color="#6BCF7F" style="background: #6BCF7F"></div>
+                        <div class="color-option" data-color="#A78BFA" style="background: #A78BFA"></div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancel-course">Cancel</button>
+                    <button type="submit" class="btn-submit">Add Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-video-modal">
+        <div class="modal-content">
+            <h2>Add Video Link</h2>
+            <form id="add-video-form">
+                <div class="form-group">
+                    <label>Video Title</label>
+                    <input type="text" id="video-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Video URL</label>
+                    <input type="url" id="video-url" placeholder="https://..." required>
+                </div>
+                <div class="form-group">
+                    <label>Duration (optional)</label>
+                    <input type="text" id="video-duration" placeholder="e.g., 10:30">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel close-modal">Cancel</button>
+                    <button type="submit" class="btn-submit">Add Video</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-pdf-modal">
+        <div class="modal-content">
+            <h2>Upload PDF</h2>
+            <form id="add-pdf-form">
+                <div class="form-group">
+                    <label>PDF Title</label>
+                    <input type="text" id="pdf-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Select PDF File</label>
+                    <input type="file" id="pdf-file" accept=".pdf" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel close-modal">Cancel</button>
+                    <button type="submit" class="btn-submit">Upload PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-dpp-modal">
+        <div class="modal-content">
+            <h2>Upload DPP</h2>
+            <form id="add-dpp-form">
+                <div class="form-group">
+                    <label>DPP Title</label>
+                    <input type="text" id="dpp-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Select PDF File</label>
+                    <input type="file" id="dpp-file" accept=".pdf" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel close-modal">Cancel</button>
+                    <button type="submit" class="btn-submit">Upload DPP</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-lesson-plan-modal">
+        <div class="modal-content">
+            <h2>Upload Lesson Plan</h2>
+            <form id="add-lesson-plan-form">
+                <div class="form-group">
+                    <label>Lesson Plan Title</label>
+                    <input type="text" id="lesson-plan-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Select PDF File</label>
+                    <input type="file" id="lesson-plan-file" accept=".pdf" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel close-modal">Cancel</button>
+                    <button type="submit" class="btn-submit">Upload Lesson Plan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="video-player-modal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" id="close-video">&times;</button>
+            <h2 id="video-player-title">Video</h2>
+            <div id="video-player-container"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="pdf-viewer-modal">
+        <div class="modal-content modal-large">
+            <div class="pdf-header">
+                <h2 id="pdf-viewer-title">PDF Viewer</h2>
+                <div class="pdf-actions">
+                    <button class="btn-print" id="print-pdf-btn">🖨️ Print</button>
+                    <button class="modal-close" id="close-pdf">&times;</button>
+                </div>
+            </div>
+            <iframe id="pdf-viewer-frame" style="width: 100%; height: 600px; border: none;"></iframe>
+        </div>
+    </div>
+
+    <div class="modal" id="add-game-modal">
+        <div class="modal-content">
+            <h2>Add New Game</h2>
+            <form id="add-game-form">
+                <div class="form-group">
+                    <label>Game Title</label>
+                    <input type="text" id="game-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="game-description" rows="3" placeholder="Describe the game..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Game Type</label>
+                    <select id="game-type" required>
+                        <option value="speed">Speed Reaction</option>
+                        <option value="memory">Memory Training</option>
+                        <option value="pattern">Pattern Recognition</option>
+                        <option value="focus">Focus Training</option>
+                        <option value="visual">Visual Memory</option>
+                        <option value="math">Math Speed</option>
+                        <option value="word">Word Recall</option>
+                        <option value="ai">AI-Based Game (Ollama)</option>
+                        <option value="cv">CV-Based Game (Camera)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="ollama-model-group" style="display: none;">
+                    <label>Ollama Model (optional)</label>
+                    <input type="text" id="ollama-model" placeholder="llama2 (default)" value="llama2">
+                    <p style="font-size: 12px; color: #666; margin-top: 5px;">Available models: llama2, mistral, codellama, etc.</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel close-modal">Cancel</button>
+                    <button type="submit" class="btn-submit">Add Game</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Small helper to toggle login tabs (kept simple)
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginTabs = document.querySelectorAll('.login-tab');
+            loginTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginTabs.forEach(t => t.classList.remove('tab-active', 'active'));
+                    tab.classList.add('tab-active', 'active');
+                    document.querySelectorAll('.login-tab-content').forEach(c => c.classList.add('hidden'));
+                    const target = document.getElementById(tab.dataset.tab + '-login');
+                    if (target) {
+                        target.classList.remove('hidden');
+                        target.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="js/storage.js"></script>
+    <script src="js/official-resources.js"></script>
+    <script src="js/games.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles/output.css">

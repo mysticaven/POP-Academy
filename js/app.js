@@ -278,11 +278,16 @@ class App {
         });
 
         // Back button
-        document.getElementById('back-to-courses').addEventListener('click', () => {
-            this.navigateTo('courses');
-            document.querySelector('[data-page="courses"]').classList.add('active');
-            document.querySelector('[data-page="course-detail"]').classList.remove('active');
-        });
+        const backBtn = document.getElementById('back-to-courses');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => {
+                this.navigateTo('courses');
+                // set sidebar active to courses
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                const coursesNav = document.querySelector('.nav-item[data-page="courses"]');
+                if (coursesNav) coursesNav.classList.add('active');
+            });
+        }
 
         // Video player close
         const closeVideo = document.getElementById('close-video');
@@ -395,7 +400,6 @@ class App {
 
         this.navigateTo('course-detail');
         document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-        document.querySelector('[data-page="course-detail"]').classList.add('active');
     }
 
     addVideo() {
